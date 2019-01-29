@@ -24,17 +24,25 @@ app.post('/api/courses', (request, response) => {
     console.log('**** req body passw', request.body.password);
     return response.json(request.body);
 });
-app.post('/api/post', (req, res) => {
+app.post('/api/log-user', (req, res) => {
     console.log('**** req body ', req.body.user);
 
     var post = req.body;
-    if (post.user === 'john' && post.password === 'johnspassword') {
+    if (post.user === 'robot' && post.password === '0000') {
         console.log('>>>>>>> USER IS LOGGED');
         // req.session.user_id = johns_user_id_here;
-        res.redirect('/test');
+        // res.redirect('/test');
+        res.send({
+            logged: true,
+            user: post.user
+        });
+        // res.send(post);
+        // return post;
     } else {
         console.log('<<<<<<<<');
-        res.send('Bad user/pass');
+        res.send({
+            logged: false
+        });
     }
     //res.send({ express: 'Hi, Ciao bella: ' + Math.floor(Math.random() * 100) });
 });
