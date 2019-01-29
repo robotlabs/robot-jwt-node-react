@@ -1,0 +1,22 @@
+{
+  "name": "node-react-graphql-server",
+  "version": "1.0.0",
+  "scripts": {
+    "prestart": "npm install && cd ./client && npm install && npm run build",
+    "start": "cd ./server && node app.js",
+    "prod": "npm run prestart && npm run server",
+    "server": "cd ./server && nodemon app.js",
+    "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
+    "client": "cd client && npm start",
+    "setup": "npm install && cd ./client && npm install"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "express-graphql": "^0.7.1",
+    "jsonwebtoken": "^8.4.0"
+  },
+  "devDependencies": {
+    "concurrently": "^4.0.1"
+  }
+}
