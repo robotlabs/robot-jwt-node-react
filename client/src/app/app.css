@@ -1,4 +1,24 @@
-.content{
-  position: relative;
-  background-color: aqua;
+.app {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+}
+
+.app .row {
+  /* border: 1px dotted grey; */
+}
+
+.app .row.header {
+  height: 30px;
+  background-color: black;
+}
+
+.app .row.content {
+  flex-grow: 1;
+  background-color: red;
+}
+
+.app .row.footer {
+  height: 30px;
+  background-color: pink;
 }

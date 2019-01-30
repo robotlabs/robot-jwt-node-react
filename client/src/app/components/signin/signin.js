@@ -2,48 +2,44 @@ import React, {Component} from 'react';
 import './signin.css';
 
 class Signin extends Component {
+  state = {
+    response: <div className='signin-response'>If you don't have an account, please <SignupButton handleClick={this.handleClick.bind(this)}></SignupButton></div>
+  }
   componentDidMount() {
-    // this.userInput = React.createRef();
-    // this.userPassw = React.createRef();
-    this.test = React.createRef();
-
-    
-    
-    
   }
   onSubmit(e) {
-    e.preventDefault()
-    // this.props.signinSubmit({
-    //   user: this.inputUser, passw: this.inputPassw
-    // });
-    console.log('this.inputUser ', this.inputUser);
+    e.preventDefault();
     fetch("/api/log-user", {
       method: 'POST',
       body: JSON.stringify({ user: this.inputUser.value, password: this.inputPassw.value }),
       headers: new Headers({ "Content-Type": "application/json" })
     })
     .then((response) => {
-      console.log('+ RESPONSE :', response);
       return response.text();
     })
     .then((responseObj) => {
-      console.log('+ YO :', responseObj);
-      console.log('ttt :', reverseStringify(responseObj));
       responseObj = reverseStringify(responseObj);
       if (!responseObj.logged) {
-        console.log('this props ', this.props.history);
-        this.props.history.push('./route-signup')
+        this.setState({
+          response: <div className='signin-response'><h1>error in your credentials.</h1>  <div>If you don't have an account, please 
+            <SignupButton handleClick={this.handleClick.bind(this)}></SignupButton>
+          </div></div>
+        })
       } else {
-        console.log('--------');
         this.props.history.push('./route-contentlogged')
       }
     })
   }
+  handleClick(e) {
+    // e.preventDefault();
+    this.props.history.push('./route-signup');
+  }
   render() {
     return (
+      <div className='signin-outer'>
       <div
         className='signin'>
-          :: Signin ::
+          <h1>Sign-in</h1>
           <form onSubmit={this.onSubmit.bind(this)}>
             <div>
               <input type="text" ref={(input) => this.inputUser = input} placeholder='username' name="username" required/>
@@ -52,9 +48,11 @@ class Signin extends Component {
               <input type="password" ref={(input) => this.inputPassw = input} placeholder='password' name="password" required/>
             </div>
             <div>
-              <input type="submit" value="Submit" />
+              <input type="submit" value="Sign in" />
             </div>
           </form>
+      </div>
+      {this.state.response}
       </div>
     )
   }
@@ -67,5 +65,15 @@ function reverseStringify(str) {
     console.error(ex);
     return {};
   }
+}
+
+const SignupButton = (props) => {
+  return (
+    <a onClick={() => {
+      props.handleClick();
+    }}
+      href='#'>sign-up
+    </a>
+  )
 }
 export default Signin;

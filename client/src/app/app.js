@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './app.css';
-import AppRouter from '../routes/app-router';
 
 //** components */
 import Footer from './components/footer/footer';
@@ -17,12 +16,20 @@ class App extends Component {
   };
   render() {
     return (
-      <div className="App">
-        <Header></Header>
-        <div className='content'>
+      <div className="app">
+        <Header
+          classNameProp={"row header"}>
+        </Header>
+        <div className='row content'>
           {this.props.children}
         </div>
-        <Footer></Footer>
+        {
+          
+          <Footer
+          classNameProp='row footer'></Footer>
+          
+        }
+        
       </div>
     );
   }

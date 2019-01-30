@@ -1,9 +1,9 @@
 import React from 'react';
 import './footer.css';
 
-const Footer = () => (
+const Footer = (props) => (
   <footer
-    className='footer'>
+    className={props.classNameProp}>
       :: FOOTER ::
   </footer>
 );

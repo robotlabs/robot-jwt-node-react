@@ -1,9 +1,9 @@
 import React from 'react';
 import './header.css';
-const Header = () => (
-  <div
-    className='header'>
+const Header = (props) => (
+  <header
+    className={props.classNameProp + ' header'}>
     :: HEADER ::
-  </div>
+  </header>
 );
 export default Header;

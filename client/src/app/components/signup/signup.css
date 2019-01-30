@@ -1,4 +1,4 @@
-.signin {
+.signup {
   width: 100%;
   position: absolute;
   
@@ -9,7 +9,7 @@
   text-align: right;
   padding: 10px;
   box-sizing: border-box;
-  background-color: yellow;
+  background-color: orangered;
 }
 .signin-response {
   position: absolute;
@@ -29,6 +29,21 @@ input[type=text], input[type=password] {
   box-sizing: border-box;
   border:.1px solid rgba(0, 0, 0, .1);
   font-size: 1em;
+}
+
+/* input[type=text]:focus, input[type=password]:focus {
+  border:.1px solid rgba(0, 0, 0, .1);
+}
+
+input[type=text]:hover, input[type=password]:hover {
+  border:3px solid rgba(0, 0, 0, .1);
+} */
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
 }
 
 .signin-outer h1{
