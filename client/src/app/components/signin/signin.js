@@ -9,15 +9,18 @@ class Signin extends Component {
   }
   onSubmit(e) {
     e.preventDefault();
+    console.log('sinininininii');
     fetch("/api/log-user", {
       method: 'POST',
       body: JSON.stringify({ user: this.inputUser.value, password: this.inputPassw.value }),
       headers: new Headers({ "Content-Type": "application/json" })
     })
     .then((response) => {
+      console.log('----->', response);
       return response.text();
     })
     .then((responseObj) => {
+      console.log(':: ', responseObj);
       responseObj = reverseStringify(responseObj);
       if (!responseObj.logged) {
         this.setState({

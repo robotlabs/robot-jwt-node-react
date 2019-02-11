@@ -12,13 +12,14 @@ class ContentLogged extends Component {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + token,
           'x-access-token': token
-        }),
+        })//,
         // body: JSON.stringify({ user: 'xx1', password: 'eee' }),
       }
       
-      // if (token) {
-      //   obj.headers["Authorization"] = `Token ${token}`;
-      // }
+      if (token) {
+        console.log('token ', token);
+        obj.headers["Authorization"] = `Token ${token}`;
+      }
       const response = await fetch('/api/hello2', obj);
       const responseJson = await response.json();
       if (response.status !== 200) throw Error(responseJson.message);
