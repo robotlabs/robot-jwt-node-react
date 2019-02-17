@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 
 const jwt   = require('jsonwebtoken');
 const fs   = require('fs');
-
+const auth = require('./jwt-auth');
 // use 'utf8' to get string instead of byte array  (512 bit key)
 var privateKEY  = fs.readFileSync('./private.key', 'utf8');
 var publicKEY  = fs.readFileSync('./public.key', 'utf8');  
@@ -42,27 +42,23 @@ app.get('/api/hello', (req, res) => {
 });
 app.get('/api/hello2', (req, res) => {
     console.log('req HEADERS::', req.headers);
-    var token = req.body.token || req.query.token || req.headers['x-access-token'];
-    console.log('TOKEN :', token.x);
-    console.log('TOKEN auth:', req.headers.authorization.x);
-    console.log('TOKEN x access:', req.headers['x-access-token'].x);
-    // res.send({ express: 'Hi, Ciao bella: ' + Math.floor(Math.random() * 100) });
-
-
-
+    var token = req.body.token || req.query.token || req.headers['authorization'];
+    var uOptions = req.headers['user-options']
     if (token) {
-        jwt.verify(token, privateKEY, (err, decoded) => {
-          if (err) {
-            return res.json({
-              success: false,
-              message: 'Token is not valid'
-            });
-          } else {console.log('>>>>>>>>>>>>>>>>>>');
-
-            req.decoded = decoded;
-            next();
-          }
+      var a = auth.verify(token, uOptions);
+      if (!a) {
+        return res.json({
+          success: false,
+          message: 'Token: Not Valid'
         });
+      } else {
+        return res.json({
+          success: true,
+          message: 'Here your protected data',
+          auth: a
+        });
+      }
+        
       } else {
         return res.json({
           success: false,
@@ -70,6 +66,3 @@ app.get('/api/hello2', (req, res) => {
         });
       }
 });
-// app.post('/api/courses', (request, response) => {
-//     return response.json(request.body);
-// });

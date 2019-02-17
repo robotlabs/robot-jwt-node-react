@@ -1,18 +1,38 @@
 import React, {Component} from 'react';
 import './signin.css';
 
+import userOptions from './../../user-options';
+
 class Signin extends Component {
   state = {
     response: <div className='signin-response'>If you don't have an account, please <SignupButton handleClick={this.handleClick.bind(this)}></SignupButton></div>
   }
   componentDidMount() {
+    localStorage.removeItem('user');
+    this.isLogged();
+  }
+  componentDidUpdate() {
+    this.isLogged();
+  }
+  isLogged() {
+    let user = JSON.parse(localStorage.getItem('user'));
+
+    if (user && user.token) {
+      console.log(': user ', user);
+      this.props.history.push('./route-contentlogged');
+      // return;
+        // return { 'Authorization': 'Bearer ' + user.token };
+    } else {
+        return {};
+    }
   }
   onSubmit(e) {
     e.preventDefault();
-    console.log('sinininininii');
+
+    
     fetch("/api/log-user", {
       method: 'POST',
-      body: JSON.stringify({ user: this.inputUser.value, password: this.inputPassw.value }),
+      body: JSON.stringify({ user: this.inputUser.value, password: this.inputPassw.value, userOptions: userOptions }),
       headers: new Headers({ "Content-Type": "application/json" })
     })
     .then((response) => {
@@ -29,7 +49,8 @@ class Signin extends Component {
           </div></div>
         })
       } else {
-        this.props.history.push('./route-contentlogged')
+        localStorage.setItem('user', JSON.stringify(responseObj));
+        this.props.history.push('./route-contentlogged');
       }
     })
   }

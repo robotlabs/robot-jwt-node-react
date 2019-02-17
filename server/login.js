@@ -20,7 +20,10 @@ const login = {
                 data4: "Data 4",
                };
               const token = auth.sign(payload, sOptions);
-              console.log(':: token ', token);
+              
+              // console.log(':: token ', token);
+              // const isVerified = auth.verify(token, sOptions);
+
               res.send({
                   logged: true,
                   user: post.user,
@@ -42,6 +45,15 @@ const login = {
           user: post.user
       });
     });
+    // app.post('/api/validate-user', (req, res) => {
+    //   console.log('**** registering user body ', req.body.user);
+    //   var post = req.body;
+    //   users.push({user: post.user, password: post.password});
+    //   res.send({
+    //       registered: true,
+    //       user: post.user
+    //   });
+    // });
   }
 }
 module.exports = login;
