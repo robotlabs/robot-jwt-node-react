@@ -1,17 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-
-const jwt   = require('jsonwebtoken');
-const fs   = require('fs');
-const auth = require('./jwt-auth');
-// use 'utf8' to get string instead of byte array  (512 bit key)
-var privateKEY  = fs.readFileSync('./private.key', 'utf8');
-var publicKEY  = fs.readFileSync('./public.key', 'utf8');  
-
 const login = require('./login');
+const jwtMiddleware = require('./jwtMiddleware');
 
 const app = express();
-
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -36,33 +28,16 @@ app.listen(port, () => console.log(`Listening on port ${port}`));
 login.init(app, users);
 
 //** standard REST api */
+//** public API */
 app.get('/api/hello', (req, res) => {
-    console.log('req ::', req.body);
     res.send({ express: 'Hi, Ciao bella: ' + Math.floor(Math.random() * 100) });
 });
+//** JWT protected API */
+app.use(jwtMiddleware);
 app.get('/api/hello2', (req, res) => {
-    console.log('req HEADERS::', req.headers);
-    var token = req.body.token || req.query.token || req.headers['authorization'];
-    var uOptions = req.headers['user-options']
-    if (token) {
-      var a = auth.verify(token, uOptions);
-      if (!a) {
-        return res.json({
-          success: false,
-          message: 'Token: Not Valid'
-        });
-      } else {
-        return res.json({
-          success: true,
-          message: 'Here your protected data',
-          auth: a
-        });
-      }
-        
-      } else {
-        return res.json({
-          success: false,
-          message: 'Auth token is not supplied'
-        });
-      }
+  return res.json({
+    success: true,
+    message: 'Here your protected data',
+    auth: res.a
+  });
 });

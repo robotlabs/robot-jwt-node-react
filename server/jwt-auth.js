@@ -1,21 +1,12 @@
 const fs   = require('fs');
 const jwt   = require('jsonwebtoken');
 
-// use 'utf8' to get string instead of byte array  (512 bit key)
 var privateKEY  = fs.readFileSync('./private.key', 'utf8');
 var publicKEY  = fs.readFileSync('./public.key', 'utf8');  
 
 
 module.exports = {
  sign: (payload, $Options) => {
-   console.log('yo', $Options);
-  /*
-   sOptions = {
-    issuer: "Authorizaxtion/Resource/This server",
-    subject: "iam@user.me", 
-    audience: "Client_Identity" // this should be provided by client
-   }
-  */
   // Token signing options
   var signOptions = {
       issuer:  $Options.issuer,
@@ -27,6 +18,7 @@ module.exports = {
   return jwt.sign(payload, privateKEY, signOptions);
 },
 verify: (token, $Option) => {
+  console.log('====')
   var verifyOptions = {
       issuer:  $Option.issuer,
       subject:  $Option.subject,

@@ -18,17 +18,13 @@ class Signin extends Component {
     let user = JSON.parse(localStorage.getItem('user'));
 
     if (user && user.token) {
-      console.log(': user ', user);
       this.props.history.push('./route-contentlogged');
-      // return;
-        // return { 'Authorization': 'Bearer ' + user.token };
     } else {
         return {};
     }
   }
   onSubmit(e) {
     e.preventDefault();
-
     
     fetch("/api/log-user", {
       method: 'POST',
@@ -49,6 +45,7 @@ class Signin extends Component {
           </div></div>
         })
       } else {
+        console.log('YP YO YO ', responseObj)
         localStorage.setItem('user', JSON.stringify(responseObj));
         this.props.history.push('./route-contentlogged');
       }
