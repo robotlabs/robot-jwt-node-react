@@ -18,7 +18,7 @@ module.exports = {
   return jwt.sign(payload, privateKEY, signOptions);
 },
 verify: (token, $Option) => {
-  console.log('====')
+  console.log('====', token)
   var verifyOptions = {
       issuer:  $Option.issuer,
       subject:  $Option.subject,

@@ -8,7 +8,10 @@ class Signin extends Component {
     response: <div className='signin-response'>If you don't have an account, please <SignupButton handleClick={this.handleClick.bind(this)}></SignupButton></div>
   }
   componentDidMount() {
-    localStorage.removeItem('user');
+    //** use to debug and remove user */
+    // localStorage.removeItem('user');
+
+    //** check if we have already a user logged */
     this.isLogged();
   }
   componentDidUpdate() {
@@ -25,18 +28,15 @@ class Signin extends Component {
   }
   onSubmit(e) {
     e.preventDefault();
-    
     fetch("/api/log-user", {
       method: 'POST',
       body: JSON.stringify({ user: this.inputUser.value, password: this.inputPassw.value, userOptions: userOptions }),
       headers: new Headers({ "Content-Type": "application/json" })
     })
     .then((response) => {
-      console.log('----->', response);
       return response.text();
     })
     .then((responseObj) => {
-      console.log(':: ', responseObj);
       responseObj = reverseStringify(responseObj);
       if (!responseObj.logged) {
         this.setState({
@@ -45,7 +45,6 @@ class Signin extends Component {
           </div></div>
         })
       } else {
-        console.log('YP YO YO ', responseObj)
         localStorage.setItem('user', JSON.stringify(responseObj));
         this.props.history.push('./route-contentlogged');
       }
@@ -90,11 +89,10 @@ function reverseStringify(str) {
 
 const SignupButton = (props) => {
   return (
-    <a onClick={() => {
-      props.handleClick();
-    }}
-      href='#'>sign-up
-    </a>
+    <button className='signup-button' onClick={props.handleClick}>
+      sign-up
+    </button>
   )
 }
+
 export default Signin;

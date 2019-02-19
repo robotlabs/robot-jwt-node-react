@@ -8,35 +8,19 @@ class Signup extends Component {
   componentDidMount() {}
   onSubmit(e) {
     e.preventDefault();
-
-    console.log('user :', this);
-    console.log('passw :', this.inputPassw.value);
-    // this.props.signinSubmit({
-    //   user: this.inputUser, passw: this.inputPassw
-    // });
     fetch("/api/register-user", {
       method: 'POST',
       body: JSON.stringify({ user: this.inputUser.value, password: this.inputPassw.value }),
       headers: new Headers({ "Content-Type": "application/json" })
     })
     .then((response) => {
-      console.log(':: RESPONSE ::', response);
       return response.text();
     })
     .then((responseObj) => {
       responseObj = reverseStringify(responseObj);
-      console.log('responseObj :', responseObj);
       if (responseObj.registered) {
         this.props.history.push('./route-signin');
       }
-    //   if (!responseObj.logged) {
-    //     // this.props.history.push('./route-signup')
-    //     this.setState({
-    //       response: <div className='signin-response'><h1>error in your credentials.</h1>  <div>If you don't have an account, please <a href='./route-signup'>sign-up</a></div></div>
-    //     })
-    //   } else {
-    //     this.props.history.push('./route-contentlogged')
-    //   }
     })
   }
   render() {

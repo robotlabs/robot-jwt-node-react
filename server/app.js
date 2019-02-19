@@ -30,14 +30,14 @@ login.init(app, users);
 //** standard REST api */
 //** public API */
 app.get('/api/hello', (req, res) => {
-    res.send({ express: 'Hi, Ciao bella: ' + Math.floor(Math.random() * 100) });
+    res.send({ message: 'Hi, Ciao bella: ' + Math.floor(Math.random() * 100) });
 });
 //** JWT protected API */
 app.use(jwtMiddleware);
-app.get('/api/hello2', (req, res) => {
+app.get('/api/hello-protected', (req, res) => {
   return res.json({
     success: true,
-    message: 'Here your protected data',
+    message: 'Random number :' + Math.floor(Math.random() * 100),
     auth: res.a
   });
 });
