@@ -7,13 +7,17 @@ import RouteSignin from './route-signin';
 import RouteContentLogged from './route-contentlogged';
 import RouteSignup from './route-signup';
 
+import Signin from './../components/signin/signin';
+import Signup from './../components/signup/signup';
+import ContentLogged from './../components/content-logged/content-logged';
+
 const history = createBrowserHistory()
 
 const routes = {
-  '/': RouteSignin,
-  '/route-signin': RouteSignin,
-  '/route-signup': RouteSignup,
-  '/route-contentlogged': RouteContentLogged,
+  '/': Signin,
+  '/route-signin': Signin,
+  '/route-signup': Signup,
+  '/route-contentlogged': ContentLogged,
 }
 
 const AppRouter = () => (
