@@ -16,6 +16,7 @@ class ContentLogged extends Component {
     this.fetchDataWrongUserOptions = this.fetchDataWrongUserOptions.bind(this);
     this.fetchDataNoToken = this.fetchDataNoToken.bind(this);
     this.fetchDataPublic = this.fetchDataPublic.bind(this);
+    this.logout = this.logout.bind(this);
   }
   fetchDataToken() {
     const user = JSON.parse(localStorage.getItem('user'));
@@ -76,9 +77,18 @@ class ContentLogged extends Component {
     if (response.status !== 200) throw Error(responseJson.message);
     return responseJson;
   } 
+  logout() {
+    localStorage.removeItem('user');
+    this.props.history.push('./route-signin');
+  }
   render () {
-    console.log(this.state.responsePublic)
     return (
+      <div>
+      <button 
+          onClick={this.logout} 
+          className='bt'>
+            Logout
+          </button>
       <div
         className='content-logged-box'>
         <button 
@@ -111,6 +121,7 @@ class ContentLogged extends Component {
           <p>Get (all unprotected api)</p>
           <p>{this.state.responsePublic}</p>
         </button>
+      </div>
       </div>
     )
   }

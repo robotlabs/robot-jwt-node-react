@@ -31,3 +31,8 @@
 .signin-outer h1::after{
   content: '..::'
 }
+
+button.signup-button{
+  background-color: yellow;
+  border: none;
+}

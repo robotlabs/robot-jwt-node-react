@@ -3,9 +3,6 @@ import React from 'react';
 import { createBrowserHistory } from 'history';
 import { Router, Route } from 'react-router-dom';
 import App from './../app';
-import RouteSignin from './route-signin';
-import RouteContentLogged from './route-contentlogged';
-import RouteSignup from './route-signup';
 
 import Signin from './../components/signin/signin';
 import Signup from './../components/signup/signup';
