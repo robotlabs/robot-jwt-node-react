@@ -21,4 +21,6 @@ private and public key are in the git, but in a real example should be part of t
 `npm run prod` will create a build and launch a local server to test
 `npm start` is being used by elastic, but is similar to prod, just using node instead of nodemon.
 
+**end**
+
 
